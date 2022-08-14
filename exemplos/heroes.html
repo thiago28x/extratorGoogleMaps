@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Aula: SuperHeróis</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+  </head>
+
+
+<!--  Thiago diz: Esta aula é baseada da documentação oficial da Fundação Mozilla,
+    você pode encontrar o link original aqui:
+    https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON#test_your_skills!
+
+ -->
+
+  <style>/* || general styles */
+
+    html {
+      font-family: 'helvetica neue', helvetica, arial, sans-serif;
+    }
+    
+    body {
+      width: 800px;
+      margin: 0 auto;
+      background-color: rgb(27, 50, 93);
+    }
+    
+    h1, h2 {
+      font-family: 'Faster One', cursive;
+      color: white;
+    }
+    
+    /* header styles */
+    
+    h1 {
+      font-size: 4rem;
+      text-align: center;
+    }
+    
+    header p {
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-align: center;
+      color: white;
+
+    }
+    
+    /* section styles */
+    
+    section article {
+      width: 33%;
+      float: left;
+      border-width: 2px;
+      border-color: white;
+      background-color: rgb(84, 84, 84);
+      color: white;
+      border-radius: 10px;
+      margin: 10px;
+    }
+
+
+     article {
+      width: 33%;
+      float: left;
+      border-width: 2px;
+      border-color: white;
+    }
+    
+    section p {
+      margin: 5px 0;
+    }
+    
+    section ul {
+      margin-top: 0;
+    }
+    
+    h2 {
+      font-size: 2.5rem;
+      letter-spacing: -5px;
+      margin-bottom: 10px;
+    }</style>
+
+
+  <body>
+        <div>
+      <header>
+
+      </header>
+
+      <section>
+
+      </section>
+    </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+
+      <div>
+        <h3>Aqui vamos testar pegar dados da nossa API clientes:</h3>
+      </div>
+
+      <script>
+
+        //aqui começa o codigo
+        async function populate() {
+
+const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+const request = new Request(requestURL);
+
+const response = await fetch(request);
+const superHeroes = await response.json();
+
+console.log('Formado em: \n \n' + superHeroes.formed);
+console.log('Cidade: \n \n' + superHeroes.homeTown);
+console.log('Nome do cara: \n \n' + superHeroes.members[1].secretIdentity);
+console.log('Nome do outro: \n \n' + superHeroes.members[0].secretIdentity);
+console.log('Nome do outro: \n \n' + superHeroes.members[2].name);
+
+
+const chamandoLocalHost = new Request("http://localhost:8080/clientes/abc");
+
+const respostaAPI = await fetch(chamandoLocalHost);
+const resultadoAPI = await respostaAPI.json();
+
+console.log('Formado em: \n \n' + respostaAPI);
+
+
+
+
+
+
+
+
+
+
+populateHeader(superHeroes);
+populateHeroes(superHeroes);}
+//terminou de pegar os dados da url
+
+
+//essa função passa os dados para o cabeçalho
+function populateHeader(obj) {
+  const header = document.querySelector('header');
+  const myH1 = document.createElement('h1');
+  myH1.textContent = obj.squadName;
+  header.appendChild(myH1);
+
+  const myPara = document.createElement('p');
+  myPara.textContent = `Hometown: ${obj.homeTown} // Formed: ${obj.formed}`;
+  header.appendChild(myPara);
+}
+
+
+//passa os dados para os cards, lembrando que os dados são passados pelo argumento "obj"
+
+function populateHeroes(obj) {
+  const section = document.querySelector('section');
+  const heroes = obj.members;
+  
+
+  for (const hero of heroes) {
+    const myArticle = document.createElement('article');
+    const myH2 = document.createElement('h2');
+    const myPara1 = document.createElement('p');
+    const myPara2 = document.createElement('p');
+    const myPara3 = document.createElement('p');
+    const myList = document.createElement('ul');
+
+    myH2.textContent = hero.name;
+    myPara1.textContent = `Secret identity: ${hero.secretIdentity}`;
+    myPara2.textContent = `Age: ${hero.age}`;
+    myPara3.textContent = 'Superpowers:';
+
+    const superPowers = hero.powers;
+    for (const power of superPowers) {
+      const listItem = document.createElement('li');
+      listItem.textContent = power;
+      myList.appendChild(listItem);
+    }
+
+    myArticle.appendChild(myH2);
+    myArticle.appendChild(myPara1);
+    myArticle.appendChild(myPara2);
+    myArticle.appendChild(myPara3);
+    myArticle.appendChild(myList);
+
+    section.appendChild(myArticle);
+  }
+}
+
+
+
+populate();
+
+
+
+
+
+
+
+
+
+      </script>
+  </body>
+</html>
